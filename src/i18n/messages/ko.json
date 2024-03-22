@@ -1,5 +1,4 @@
 {
-  "blade_lineage_mentor": "검계 우두머리",
   "sinner": {
     "yi_sang": "이상",
     "faust": "파우스트",
@@ -13,5 +12,15 @@
     "sinclair": "싱클레어",
     "outis": "오티스",
     "gregor": "그레고르"
-  }
+  },
+  "identityName": {
+    "blade_lineage_mentor": "검계 우두머리"
+  },
+  "filterCategory": {
+    "skill1.attackType": "1스킬 공격 유형",
+    "skill2.attackType": "2스킬 공격 유형"
+  },
+  "slash" : "참격",
+  "pierce": "관통",
+  "blunt": "타격"
 }

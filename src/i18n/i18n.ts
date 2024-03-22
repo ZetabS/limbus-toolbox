@@ -26,7 +26,7 @@ i18n
     resources,
     lng: 'ko',
     fallbackLng: 'en',
-    debug: true,
+    debug: false,
     keySeparator: '.',
     interpolation: {
       escapeValue: false // not needed for react as it escapes by default

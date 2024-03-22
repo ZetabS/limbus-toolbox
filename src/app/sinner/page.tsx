@@ -1,51 +1,73 @@
 'use client';
 import MultipleSelectionFilter from '@/app/sinner/MultipleSelectionFilter';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import IdentityCard from '@/app/sinner/IdentityCard';
-import { Identity, identityList } from '@/app/sinner/Identity';
+import { identityList } from '@/app/sinner/Identity';
+import { Identity } from '@/typing';
+import { getValueByPath } from '@/helper/getValueByPath';
 
-interface FilterInformation {
-  name: string;
-  initialFilters: string[];
+interface FilterConfig {
+  category: string;
+  conditions: string[];
+}
+
+const filterConfigs: FilterConfig[] = [
+  { category: 'skill1.attackType', conditions: ['slash', 'pierce', 'blunt'] },
+  { category: 'skill2.attackType', conditions: ['slash', 'pierce', 'blunt'] }
+];
+
+interface SelectedConditions {
+  [key: string]: string[];
 }
 
 const Sinner: React.FC = () => {
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [selectedConditions, setSelectedConditions] = useState<SelectedConditions>(
+    filterConfigs.reduce((result: SelectedConditions, filterConfig) => {
+      result[filterConfig.category] = [];
+      return result;
+    }, {})
+  );
   const [filteredIdentities, setFilteredIdentities] = useState<Identity[]>([]);
 
-  const filterInformation: FilterInformation[] = [
-    { name: '공격 유형', initialFilters: ['slash', 'pierce', 'blunt'] }
-  ];
-
-  function handleToggleFilter(filter: string) {
-    setSelectedFilters((prevFilters) => {
-      if (prevFilters.includes(filter)) {
-        return prevFilters.filter((f) => f !== filter);
+  function handleToggle(category: string, condition: string) {
+    setSelectedConditions((prevSelectedConditions) => {
+      const updatedConditions = { ...prevSelectedConditions };
+      // 해당 카테고리에서 조건이 이미 선택되어 있는지 확인
+      if (updatedConditions[category].includes(condition)) {
+        // 조건이 이미 선택되어 있다면 제거
+        updatedConditions[category] = updatedConditions[category].filter((c) => c !== condition);
       } else {
-        return [...prevFilters, filter];
+        // 조건이 선택되어 있지 않다면 추가
+        updatedConditions[category] = [...updatedConditions[category], condition];
       }
+      return updatedConditions;
     });
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     setFilteredIdentities(
       identityList.filter((identity: Identity) => {
-        return selectedFilters.some((condition) => {
-          return identity.skill1.attackType === condition;
+        return Object.entries(selectedConditions).every(([category, conditions]) => {
+          return (
+            conditions.length === 0 ||
+            conditions.some((condition) => {
+              return getValueByPath(identity, category) === condition;
+            })
+          );
         });
       })
     );
-  }, [selectedFilters]);
+  }, [selectedConditions]);
 
   return (
     <div className="flex h-max w-full flex-col items-center justify-center gap-4 p-4">
       <div>
-        {filterInformation.map(({ name, initialFilters }) => (
+        {filterConfigs.map(({ category, conditions }) => (
           <MultipleSelectionFilter
-            key={name}
-            name={name}
-            conditions={initialFilters}
-            onToggleFilter={handleToggleFilter}
+            key={category}
+            category={category}
+            conditions={conditions}
+            onToggle={(condition) => handleToggle(category, condition)}
           ></MultipleSelectionFilter>
         ))}
       </div>

@@ -1,34 +1,37 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import '@/i18n/i18n';
 
 interface Props {
-  name: string;
+  category: string;
   conditions: string[];
-  onToggleFilter: (value: string) => void;
+  onToggle: (value: string) => void;
 }
 
-const MultipleSelectionFilter: React.FC<Props> = ({ name, conditions, onToggleFilter }) => {
+const MultipleSelectionFilter: React.FC<Props> = ({ category, conditions, onToggle }) => {
+  const { t } = useTranslation();
   const [selectedConditions, setSelectedConditions] = useState<string[]>([]);
 
   function toggle(condition: string) {
     let updated: string[];
     if (isActive(condition)) {
-      updated = selectedConditions.filter((selectedConditions) => selectedConditions !== condition);
+      updated = selectedConditions.filter((c) => c !== condition);
     } else {
       updated = [...selectedConditions, condition];
     }
     setSelectedConditions(updated);
-    onToggleFilter(condition);
+    onToggle(condition);
   }
 
   function toggleAll() {
     if (isAllActive()) {
       for (const selectedCondition of selectedConditions) {
-        onToggleFilter(selectedCondition);
+        onToggle(selectedCondition);
       }
       setSelectedConditions([]);
     } else {
       for (const condition of conditions) {
-        if (!isActive(condition)) onToggleFilter(condition);
+        if (!isActive(condition)) onToggle(condition);
       }
       setSelectedConditions(conditions);
     }
@@ -44,7 +47,7 @@ const MultipleSelectionFilter: React.FC<Props> = ({ name, conditions, onToggleFi
 
   return (
     <div className="flex flex-col justify-center gap-2">
-      <div className="">{name}</div>
+      <div className="">{category}</div>
       <div className="flex items-center justify-center">
         <button
           className={`${isAllActive() ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} rounded-l-md px-4 py-2`}
@@ -59,7 +62,7 @@ const MultipleSelectionFilter: React.FC<Props> = ({ name, conditions, onToggleFi
             ${condition === conditions[conditions.length - 1] ? 'rounded-r-md' : ''}`}
             onClick={() => toggle(condition)}
           >
-            {condition}
+            {t(condition)}
           </button>
         ))}
       </div>
