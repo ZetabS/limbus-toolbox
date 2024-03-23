@@ -1,18 +1,16 @@
 {
-  "sinner": {
-    "yi_sang": "이상",
-    "faust": "파우스트",
-    "don_quixote": "돈키호테",
-    "ryoshu": "료슈",
-    "meursault": "뫼르소",
-    "hong_lu": "홍루",
-    "heathcliff": "히스클리프",
-    "ishmael": "이스마엘",
-    "rodion": "로쟈",
-    "sinclair": "싱클레어",
-    "outis": "오티스",
-    "gregor": "그레고르"
-  },
+  "yi_sang": "이상",
+  "faust": "파우스트",
+  "don_quixote": "돈키호테",
+  "ryoshu": "료슈",
+  "meursault": "뫼르소",
+  "hong_lu": "홍루",
+  "heathcliff": "히스클리프",
+  "ishmael": "이스마엘",
+  "rodion": "로쟈",
+  "sinclair": "싱클레어",
+  "outis": "오티스",
+  "gregor": "그레고르",
   "identityName": {
     "blade_lineage_mentor": "검계 우두머리"
   },
@@ -20,7 +18,7 @@
     "skill1.attackType": "1스킬 공격 유형",
     "skill2.attackType": "2스킬 공격 유형"
   },
-  "slash" : "참격",
+  "slash": "참격",
   "pierce": "관통",
   "blunt": "타격"
 }
