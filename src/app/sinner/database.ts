@@ -1,6 +1,6 @@
 import { Identity } from '@/common/typing';
 
-export const identityList: Identity[] = [
+export const IDENTITY_DB: Identity[] = [
   {
     id: 0,
     sinner: 'meursault',
