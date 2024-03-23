@@ -47,7 +47,6 @@ const MultipleSelectionFilter: React.FC<Props> = ({ category, conditions, onTogg
 
   return (
     <div className="flex flex-col justify-center gap-2">
-      <div className="">{category}</div>
       <div className="flex items-center justify-center">
         <button
           className={`${isAllActive() ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} rounded-l-md px-4 py-2`}

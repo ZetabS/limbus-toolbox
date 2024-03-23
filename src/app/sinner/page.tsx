@@ -5,6 +5,8 @@ import IdentityCard from '@/app/sinner/IdentityCard';
 import { identityList } from '@/app/sinner/Identity';
 import { Identity } from '@/typing';
 import { getValueByPath } from '@/helper/getValueByPath';
+import Collapsible from '@/app/sinner/collapsible';
+import { SINNER_NAME } from '@/const';
 
 interface FilterConfig {
   category: string;
@@ -12,6 +14,11 @@ interface FilterConfig {
 }
 
 const filterConfigs: FilterConfig[] = [
+  { category: 'sinner', conditions: Object.values(SINNER_NAME) },
+  { category: 'rarity', conditions: [] },
+  { category: 'attackType', conditions: [] },
+  { category: 'sinAffinity', conditions: [] },
+  { category: 'keyword', conditions: [] },
   { category: 'skill1.attackType', conditions: ['slash', 'pierce', 'blunt'] },
   { category: 'skill2.attackType', conditions: ['slash', 'pierce', 'blunt'] }
 ];
@@ -60,18 +67,24 @@ const Sinner: React.FC = () => {
   }, [selectedConditions]);
 
   return (
-    <div className="flex h-max w-full flex-col items-center justify-center gap-4 p-4">
-      <div>
+    <div className="flex h-max w-full flex-col items-center justify-center gap-4 py-4">
+      <div className="flex w-full flex-col items-center justify-center gap-4 bg-red-100 ">
         {filterConfigs.map(({ category, conditions }) => (
-          <MultipleSelectionFilter
+          <Collapsible
             key={category}
-            category={category}
-            conditions={conditions}
-            onToggle={(condition) => handleToggle(category, condition)}
-          ></MultipleSelectionFilter>
+            title={category}
+            className="flex w-96 flex-col items-center justify-center bg-cyan-300"
+          >
+            <MultipleSelectionFilter
+              key={category}
+              category={category}
+              conditions={conditions}
+              onToggle={(condition) => handleToggle(category, condition)}
+            ></MultipleSelectionFilter>
+          </Collapsible>
         ))}
       </div>
-      <div className="flex h-max w-full flex-col items-center justify-center">
+      <div className="flex h-max w-full flex-col items-center justify-center bg-yellow-100">
         수감자 목록
         {filteredIdentities.map((identity) => (
           <IdentityCard key={identity.sinner} identity={identity}></IdentityCard>
