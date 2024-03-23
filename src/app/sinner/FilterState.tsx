@@ -30,8 +30,9 @@ type Action = {
   condition?: Condition;
 };
 
-const reducer = (state: FilterState, action: Action): FilterState => {
+const reducer = (prevState: FilterState, action: Action): FilterState => {
   const { actionType, category, condition } = action;
+  const state: FilterState = { ...prevState };
 
   switch (actionType) {
     case 'TOGGLE':
