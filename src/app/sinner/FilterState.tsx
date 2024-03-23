@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 import { ATTACK_TYPE, KEYWORD, SIN_AFFINITY, SINNER_NAME } from '@/common/constants';
 
-const filterConfigs = {
+export const filterConfigs = {
   'sinner': Object.values(SINNER_NAME),
   'rarity': ['1', '2', '3'],
   'attackType': Object.values(ATTACK_TYPE),
@@ -66,10 +66,10 @@ const reducer = (state: FilterState, action: Action): FilterState => {
   }
 };
 
-const FilterContext = createContext<{ state: FilterState; dispatch: React.Dispatch<Action> }>({
-  state: initialState,
-  dispatch: () => null
-});
+export const FilterContext = createContext<[FilterState, React.Dispatch<Action>]>([
+  initialState,
+  () => null
+]);
 
 interface Props {
   children: React.ReactNode;
@@ -78,5 +78,5 @@ interface Props {
 export const FilterProvider: React.FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  return <FilterContext.Provider value={{ state, dispatch }}>{children}</FilterContext.Provider>;
+  return <FilterContext.Provider value={[state, dispatch]}>{children}</FilterContext.Provider>;
 };
