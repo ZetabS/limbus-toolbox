@@ -74,7 +74,7 @@ const Sinner: React.FC = () => {
       <div className="flex h-max w-full flex-col items-center justify-center">
         수감자 목록
         {filteredIdentities.map((identity) => (
-          <IdentityCard key={identity.name} identity={identity}></IdentityCard>
+          <IdentityCard key={identity.sinner} identity={identity}></IdentityCard>
         ))}
       </div>
     </div>

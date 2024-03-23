@@ -40,8 +40,8 @@ export interface Skill {
 
 export interface Identity {
   id: number;
-  name: SinnerName;
-  identityName: string;
+  name: string;
+  sinner: SinnerName;
   rarity: string;
   affiliation: string;
   season: string;

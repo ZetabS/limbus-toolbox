@@ -3,8 +3,8 @@ import { Identity } from '@/typing';
 export const identityList: Identity[] = [
   {
     id: 0,
-    name: 'meursault',
-    identityName: 'blade_lineage_mentor',
+    sinner: 'meursault',
+    name: 'blade_lineage_mentor',
     rarity: '3',
     affiliation: 'blade_lineage',
     season: '',
