@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import '@/i18n/i18n';
-import { Identity } from '@/typing';
+import { Identity } from '@/common/typing';
 
 interface Props {
   identity: Identity;

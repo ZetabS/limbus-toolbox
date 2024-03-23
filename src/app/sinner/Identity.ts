@@ -1,4 +1,4 @@
-import { Identity } from '@/typing';
+import { Identity } from '@/common/typing';
 
 export const identityList: Identity[] = [
   {

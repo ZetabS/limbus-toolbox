@@ -3,10 +3,10 @@ import MultipleSelectionFilter from '@/app/sinner/MultipleSelectionFilter';
 import React, { useEffect, useState } from 'react';
 import IdentityCard from '@/app/sinner/IdentityCard';
 import { identityList } from '@/app/sinner/Identity';
-import { Identity } from '@/typing';
+import { Identity } from '@/common/typing';
 import { getValueByPath } from '@/helper/getValueByPath';
 import Collapsible from '@/app/sinner/collapsible';
-import { SINNER_NAME } from '@/const';
+import { SINNER_NAME } from '@/common/constants';
 
 interface FilterConfig {
   category: string;
