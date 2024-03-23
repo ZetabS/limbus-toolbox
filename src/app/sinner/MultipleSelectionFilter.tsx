@@ -1,48 +1,23 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import '@/i18n/i18n';
+import { Category, Condition, FilterContext } from '@/app/sinner/FilterState';
 
 interface Props {
-  category: string;
-  conditions: string[];
-  onToggle: (value: string) => void;
+  readonly category: Category;
+  readonly conditions: Condition[];
 }
 
-const MultipleSelectionFilter: React.FC<Props> = ({ category, conditions, onToggle }) => {
+const MultipleSelectionFilter: React.FC<Props> = ({ category, conditions }) => {
   const { t } = useTranslation();
-  const [selectedConditions, setSelectedConditions] = useState<string[]>([]);
+  const [filterState, filterDispatch] = useContext(FilterContext);
 
-  function toggle(condition: string) {
-    let updated: string[];
-    if (isActive(condition)) {
-      updated = selectedConditions.filter((c) => c !== condition);
-    } else {
-      updated = [...selectedConditions, condition];
-    }
-    setSelectedConditions(updated);
-    onToggle(condition);
-  }
-
-  function toggleAll() {
-    if (isAllActive()) {
-      for (const selectedCondition of selectedConditions) {
-        onToggle(selectedCondition);
-      }
-      setSelectedConditions([]);
-    } else {
-      for (const condition of conditions) {
-        if (!isActive(condition)) onToggle(condition);
-      }
-      setSelectedConditions(conditions);
-    }
-  }
-
-  function isActive(condition: string) {
-    return selectedConditions.includes(condition);
+  function isActive(condition: Condition) {
+    return filterState[category].includes(condition);
   }
 
   function isAllActive() {
-    return selectedConditions.length === conditions.length;
+    return filterState[category].length === conditions.length;
   }
 
   return (
@@ -50,7 +25,7 @@ const MultipleSelectionFilter: React.FC<Props> = ({ category, conditions, onTogg
       <div className="flex items-center justify-center">
         <button
           className={`${isAllActive() ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} rounded-l-md px-4 py-2`}
-          onClick={toggleAll}
+          onClick={() => filterDispatch({ actionType: 'TOGGLE_ALL', category })}
         >
           ALL
         </button>
@@ -59,7 +34,7 @@ const MultipleSelectionFilter: React.FC<Props> = ({ category, conditions, onTogg
             key={condition}
             className={`${isActive(condition) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} px-4 py-2
             ${condition === conditions[conditions.length - 1] ? 'rounded-r-md' : ''}`}
-            onClick={() => toggle(condition)}
+            onClick={() => filterDispatch({ actionType: 'TOGGLE', category, condition })}
           >
             {t(condition)}
           </button>

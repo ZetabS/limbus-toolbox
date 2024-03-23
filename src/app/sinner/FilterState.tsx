@@ -1,3 +1,4 @@
+'use client';
 import React, { createContext, useReducer } from 'react';
 import { ATTACK_TYPE, KEYWORD, SIN_AFFINITY, SINNER_NAME } from '@/common/constants';
 
