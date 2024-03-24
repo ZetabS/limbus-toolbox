@@ -5,15 +5,15 @@ import {
   ConditionContext,
   FilterContext
 } from '@/app/sinner/filter/FilterState';
-import React, { useContext } from 'react';
+import React, { JSX, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
   readonly className?: string;
-  readonly children?: React.ReactNode;
+  readonly render?: (category: Category, condition: Condition) => JSX.Element;
 }
 
-const FilterButton: React.FC<Props> = ({ className, children }) => {
+const FilterButton: React.FC<Props> = ({ className, render }) => {
   const { t } = useTranslation();
   const [filterState, filterDispatch] = useContext(FilterContext);
   const category: Category = useContext(CategoryContext);
@@ -27,13 +27,13 @@ const FilterButton: React.FC<Props> = ({ className, children }) => {
     <button
       key={condition}
       className={
-        'text-nowrap ' +
+        'flex items-center justify-center text-nowrap ' +
         `${isActive(condition) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} ` +
         `${className ? className : ''}`
       }
       onClick={() => filterDispatch({ actionType: 'TOGGLE', category, condition })}
     >
-      {children ? children : t(condition)}
+      {render ? render(category, condition) : t(condition)}
     </button>
   );
 };
