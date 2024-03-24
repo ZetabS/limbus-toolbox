@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
-import { FilterProvider } from '@/app/sinner/FilterState';
-import FilterList from '@/app/sinner/FilterList';
+import { FilterProvider } from '@/app/sinner/filter/FilterState';
+import FilterList from '@/app/sinner/filter/FilterList';
 import IdentityList from '@/app/sinner/IdentityList';
 
 const Sinner: React.FC = () => {

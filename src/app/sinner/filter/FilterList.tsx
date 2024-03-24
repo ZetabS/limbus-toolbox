@@ -1,5 +1,5 @@
-import { Category, Condition, filterConfigs } from '@/app/sinner/FilterState';
-import MultipleSelectionFilter from '@/app/sinner/MultipleSelectionFilter';
+import { Category, Condition, filterConfigs } from '@/app/sinner/filter/FilterState';
+import MultipleSelectionFilter from '@/app/sinner/filter/MultipleSelectionFilter';
 import React from 'react';
 
 const FilterList: React.FC = () => {

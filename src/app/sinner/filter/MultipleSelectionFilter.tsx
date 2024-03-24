@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import '@/i18n/i18n';
-import { Category, Condition, FilterContext } from '@/app/sinner/FilterState';
+import { Category, Condition, FilterContext } from '@/app/sinner/filter/FilterState';
 
 interface Props {
   readonly category: Category;
