@@ -12,7 +12,7 @@ const IdentityCard: React.FC<Props> = ({ identity }) => {
   return (
     <div className="flex h-32 w-64 flex-col border-4 border-amber-700">
       <div className="flex ">
-        {t(`identityName.${identity.name}`)} {t(`sinner.${identity.sinner}`)}
+        {t(`identityName.${identity.name}`)} {t(identity.sinner)}
       </div>
     </div>
   );
