@@ -86,3 +86,6 @@ export const FilterProvider: React.FC<Props> = ({ children }) => {
 
   return <FilterContext.Provider value={[state, dispatch]}>{children}</FilterContext.Provider>;
 };
+
+export const CategoryContext: React.Context<Category> = React.createContext('' as Category);
+export const ConditionContext: React.Context<Condition> = React.createContext('' as Condition);
