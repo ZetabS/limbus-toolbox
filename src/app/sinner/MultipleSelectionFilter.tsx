@@ -16,28 +16,33 @@ const MultipleSelectionFilter: React.FC<Props> = ({ category, conditions }) => {
     return filterState[category].includes(condition);
   }
 
-  function isAllActive() {
-    return filterState[category].length === conditions.length;
+  const numRows = Math.ceil(conditions.length / 6);
+  const conditionsPerRow = Math.ceil(conditions.length / numRows);
+
+  const conditionRows = [];
+  for (let i = 0; i < numRows; i++) {
+    const startIdx = i * conditionsPerRow;
+    const endIdx = startIdx + conditionsPerRow;
+    const rowConditions = conditions.slice(startIdx, endIdx);
+    conditionRows.push(rowConditions);
   }
 
   return (
     <div className="flex flex-col justify-center gap-2">
-      <div className="flex items-center justify-center">
-        <button
-          className={`${isAllActive() ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} rounded-l-md px-4 py-2`}
-          onClick={() => filterDispatch({ actionType: 'TOGGLE_ALL', category })}
-        >
-          ALL
-        </button>
-        {conditions.map((condition) => (
-          <button
-            key={condition}
-            className={`${isActive(condition) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} px-4 py-2
-            ${condition === conditions[conditions.length - 1] ? 'rounded-r-md' : ''}`}
-            onClick={() => filterDispatch({ actionType: 'TOGGLE', category, condition })}
-          >
-            {t(condition)}
-          </button>
+      <div className="flex w-max flex-col flex-wrap items-center justify-center gap-1 bg-gray-400 p-1">
+        {conditionRows.map((rowConditions, rowIndex) => (
+          <div key={rowIndex} className="flex w-max items-center justify-center gap-1 bg-gray-400">
+            {rowConditions.map((condition) => (
+              <button
+                key={condition}
+                className={`${isActive(condition) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} w-32 text-nowrap
+                px-4 py-2`}
+                onClick={() => filterDispatch({ actionType: 'TOGGLE', category, condition })}
+              >
+                {t(condition)}
+              </button>
+            ))}
+          </div>
         ))}
       </div>
     </div>
