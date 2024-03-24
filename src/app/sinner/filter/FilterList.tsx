@@ -2,6 +2,8 @@ import React from 'react';
 import FilterButton from '@/app/sinner/filter/FilterButton';
 import FilterCategory from '@/app/sinner/filter/FilterCategory';
 import { SinnerName } from '@/common/typing';
+import SinnerIcon from '@/image/SinnerIcon';
+import RarityIcon from '@/image/RarityIcon';
 
 const FilterList: React.FC = () => {
   return (
@@ -12,6 +14,7 @@ const FilterList: React.FC = () => {
           render={(category, condition) => (
             <>
               {condition}
+              <SinnerIcon sinner={condition as SinnerName}></SinnerIcon>
             </>
           )}
         />
@@ -21,6 +24,7 @@ const FilterList: React.FC = () => {
           className="h-20 w-max p-2"
           render={(category, condition) => (
             <>
+              <RarityIcon rarity={condition}></RarityIcon>
             </>
           )}
         />
