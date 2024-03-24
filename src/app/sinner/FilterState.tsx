@@ -45,6 +45,10 @@ const reducer = (prevState: FilterState, action: Action): FilterState => {
         throw Error(`Type of condition is ${typeof condition}`);
       }
 
+      if (![...filterConfigs[category]].includes(condition)) {
+        throw Error(`Condition not in ${filterConfigs[category]}`);
+      }
+
       if (state[category].includes(condition)) {
         state[category] = state[category].filter((c) => c !== condition);
       } else {
@@ -64,7 +68,7 @@ const reducer = (prevState: FilterState, action: Action): FilterState => {
     case 'RESET':
       return initialState;
     default:
-      return state;
+      throw Error(`Type of actionType is ${typeof actionType}, value is ${actionType}`);
   }
 };
 
