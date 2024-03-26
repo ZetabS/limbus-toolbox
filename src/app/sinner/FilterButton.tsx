@@ -1,8 +1,8 @@
 import { Category, Condition, FilterContext, useFilter } from '@/app/sinner/hooks/useFilter';
 import React, { JSX, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CategoryContext } from '@/app/sinner/CategoryContext';
-import { ConditionContext } from '@/app/sinner/ConditionContext';
+import { CategoryContext } from '@/app/sinner/hooks/CategoryContext';
+import { ConditionContext } from '@/app/sinner/hooks/ConditionContext';
 
 interface Props {
   readonly className?: string;

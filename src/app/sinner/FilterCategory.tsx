@@ -1,8 +1,8 @@
 import React from 'react';
 import '@/i18n/i18n';
 import { Category, Condition, filterConfigs } from '@/app/sinner/hooks/useFilter';
-import { CategoryContext } from '@/app/sinner/CategoryContext';
-import { ConditionContext } from '@/app/sinner/ConditionContext';
+import { CategoryContext } from '@/app/sinner/hooks/CategoryContext';
+import { ConditionContext } from '@/app/sinner/hooks/ConditionContext';
 
 interface Props {
   readonly category: Category;
