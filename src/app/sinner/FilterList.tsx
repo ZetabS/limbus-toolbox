@@ -1,30 +1,27 @@
 import React from 'react';
 import FilterButton from '@/app/sinner/FilterButton';
 import FilterCategory from '@/app/sinner/FilterCategory';
-import { SinnerName } from '@/common/typing';
-import SinnerIcon from '@/components/image/SinnerIcon';
-import RarityIcon from '@/components/image/RarityIcon';
+import AutoSizeImage from '@/components/AutoSizeImage';
 
 const FilterList: React.FC = () => {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-4 bg-red-100 ">
       <FilterCategory category={'sinner'} row={2}>
         <FilterButton
-          className="w-32 px-4 py-2"
+          className="h-20 w-32"
           render={(category, condition) => (
             <>
-              {condition}
-              <SinnerIcon sinner={condition as SinnerName}></SinnerIcon>
+              <AutoSizeImage alt={condition} src={`/sinner_icon/${condition}.webp`}></AutoSizeImage>
             </>
           )}
         />
       </FilterCategory>
       <FilterCategory category={'rarity'}>
         <FilterButton
-          className="h-20 w-max p-2"
+          className="h-20 w-40"
           render={(category, condition) => (
             <>
-              <RarityIcon rarity={condition}></RarityIcon>
+              <AutoSizeImage alt={condition} src={`/rarity_icon/${condition}.webp`}></AutoSizeImage>
             </>
           )}
         />

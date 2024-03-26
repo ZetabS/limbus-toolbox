@@ -6,7 +6,7 @@ import { ConditionContext } from '@/app/sinner/hooks/ConditionContext';
 
 interface Props {
   readonly className?: string;
-  readonly render?: (category: Category, condition: Condition) => JSX.Element;
+  readonly render: (category: Category, condition: Condition) => JSX.Element;
 }
 
 const FilterButton: React.FC<Props> = ({ className, render }) => {
