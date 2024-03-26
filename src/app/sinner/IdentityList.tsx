@@ -1,8 +1,8 @@
 import IdentityCard from '@/app/sinner/IdentityCard';
 import React, { useContext, useEffect, useState } from 'react';
 import { Identity } from '@/common/typing';
-import { FilterContext } from '@/app/sinner/filter/FilterState';
-import { IDENTITY_DB } from '@/app/sinner/database';
+import { FilterContext } from '@/app/sinner/hooks/useFilter';
+import { IDENTITY_DB } from '@/app/sinner/hooks/database';
 import { getValueByPath } from '@/helper/getValueByPath';
 
 const IdentityList: React.FC = () => {

@@ -1,9 +1,9 @@
 import React from 'react';
-import FilterButton from '@/app/sinner/filter/FilterButton';
-import FilterCategory from '@/app/sinner/filter/FilterCategory';
+import FilterButton from '@/app/sinner/FilterButton';
+import FilterCategory from '@/app/sinner/FilterCategory';
 import { SinnerName } from '@/common/typing';
-import SinnerIcon from '@/image/SinnerIcon';
-import RarityIcon from '@/image/RarityIcon';
+import SinnerIcon from '@/components/image/SinnerIcon';
+import RarityIcon from '@/components/image/RarityIcon';
 
 const FilterList: React.FC = () => {
   return (

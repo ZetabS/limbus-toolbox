@@ -1,12 +1,8 @@
-import {
-  Category,
-  CategoryContext,
-  Condition,
-  ConditionContext,
-  FilterContext
-} from '@/app/sinner/filter/FilterState';
+import { Category, Condition, FilterContext, useFilter } from '@/app/sinner/hooks/useFilter';
 import React, { JSX, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { CategoryContext } from '@/app/sinner/CategoryContext';
+import { ConditionContext } from '@/app/sinner/ConditionContext';
 
 interface Props {
   readonly className?: string;
@@ -15,23 +11,19 @@ interface Props {
 
 const FilterButton: React.FC<Props> = ({ className, render }) => {
   const { t } = useTranslation();
-  const [filterState, filterDispatch] = useContext(FilterContext);
+  const { isActive, toggleFilter } = useFilter();
   const category: Category = useContext(CategoryContext);
   const condition: Condition = useContext(ConditionContext);
-
-  function isActive(condition: Condition) {
-    return filterState[category].includes(condition);
-  }
 
   return (
     <button
       key={condition}
       className={
         'flex items-center justify-center text-nowrap ' +
-        `${isActive(condition) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} ` +
+        `${isActive(category, condition) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} ` +
         `${className ? className : ''}`
       }
-      onClick={() => filterDispatch({ actionType: 'TOGGLE', category, condition })}
+      onClick={() => toggleFilter(category, condition)}
     >
       {render ? render(category, condition) : t(condition)}
     </button>
