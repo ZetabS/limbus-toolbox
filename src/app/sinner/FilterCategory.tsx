@@ -7,10 +7,10 @@ import { ConditionContext } from '@/app/sinner/hooks/ConditionContext';
 interface Props {
   readonly category: Category;
   readonly row?: number;
-  readonly children: React.ReactNode;
+  readonly button: React.ReactNode;
 }
 
-const FilterCategory: React.FC<Props> = ({ category, row = 1, children }) => {
+const FilterCategory: React.FC<Props> = ({ category, row = 1, button }) => {
   const conditions: Condition[] = [...filterConfigs[category]];
   const conditionsPerRow = Math.ceil(conditions.length / row);
 
@@ -23,12 +23,12 @@ const FilterCategory: React.FC<Props> = ({ category, row = 1, children }) => {
 
   return (
     <CategoryContext.Provider value={category}>
-      <div className="flex w-max flex-col flex-wrap items-center justify-center gap-1 bg-gray-400 p-1">
+      <div className="flex w-max flex-col items-center justify-center gap-0.5 bg-gray-400 p-0.5">
         {conditionRows.map((conditions, index) => (
-          <div key={index} className="flex w-max items-center justify-center gap-1 bg-gray-400">
+          <div key={index} className="flex w-max items-center justify-center gap-0.5 bg-gray-400">
             {conditions.map((condition) => (
               <ConditionContext.Provider key={condition} value={condition}>
-                {children}
+                {button}
               </ConditionContext.Provider>
             ))}
           </div>
