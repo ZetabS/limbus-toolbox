@@ -1,19 +1,18 @@
 import {
   ATTACK_TYPE,
+  KEYWORD,
   KEYWORD_AFFINITY,
-  KEYWORD_OTHER,
   RESISTANCE_LEVEL,
   SIN_AFFINITY,
   SINNER_NAME
 } from '@/common/constants';
 
-export type SinnerName = (typeof SINNER_NAME)[keyof typeof SINNER_NAME];
-export type ResistanceLevel = (typeof RESISTANCE_LEVEL)[keyof typeof RESISTANCE_LEVEL];
-export type AttackType = (typeof ATTACK_TYPE)[keyof typeof ATTACK_TYPE];
-export type SinAffinity = (typeof SIN_AFFINITY)[keyof typeof SIN_AFFINITY];
-export type KeywordAffinity = (typeof KEYWORD_AFFINITY)[keyof typeof KEYWORD_AFFINITY];
-export type KeywordOther = (typeof KEYWORD_OTHER)[keyof typeof KEYWORD_OTHER];
-export type Keyword = KeywordAffinity | KeywordOther;
+export type SinnerName = (typeof SINNER_NAME)[number];
+export type ResistanceLevel = (typeof RESISTANCE_LEVEL)[number];
+export type AttackType = (typeof ATTACK_TYPE)[number];
+export type SinAffinity = (typeof SIN_AFFINITY)[number];
+export type KeywordAffinity = (typeof KEYWORD_AFFINITY)[number];
+export type Keyword = KeywordAffinity | (typeof KEYWORD)[number];
 
 export interface Skill {
   name: string;
