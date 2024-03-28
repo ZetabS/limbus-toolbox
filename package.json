@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.12",
     "accept-language": "^3.0.18",
     "daisyui": "^4.9.0",
     "i18next": "^23.10.1",
