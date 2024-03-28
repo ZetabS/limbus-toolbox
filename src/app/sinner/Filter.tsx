@@ -1,35 +1,32 @@
-import React, { JSX } from 'react';
+import React from 'react';
 import '@/i18n/i18n';
-import { Category, Condition, filterConfigs } from '@/app/sinner/hooks/useFilter';
-import { CategoryContext } from '@/app/sinner/hooks/CategoryContext';
+import { FilterConfig } from '@/app/sinner/hooks/useFilter';
+import { ConfigContext } from '@/app/sinner/hooks/ConfigContext';
 import { FilterButtonList } from '@/app/sinner/FilterButtonList';
-import { chunkArray } from '@/helper/chunkSize';
+import { chunkArray } from '@/helper/chunkArray';
 
 interface Props {
-  readonly category: Category;
-  readonly column?: number;
-  readonly imagePath?: (condition: string) => string;
+  config: FilterConfig;
 }
 
-const Filter: React.FC<Props> = ({ category, column, imagePath }) => {
-  const conditions: Condition[] = [...filterConfigs[category]];
-
+const Filter: React.FC<Props> = ({ config }) => {
   return (
-    <CategoryContext.Provider value={category}>
-      <div className="flex flex-col">
-        {column ? (
-          chunkArray<Condition>(conditions, column).map((conditions, index) => (
-            <FilterButtonList
-              key={index}
-              conditions={conditions}
-              imagePath={imagePath}
-            ></FilterButtonList>
-          ))
-        ) : (
-          <FilterButtonList conditions={conditions} imagePath={imagePath}></FilterButtonList>
-        )}
-      </div>
-    </CategoryContext.Provider>
+    <ConfigContext.Provider value={config}>
+      {config.column ? (
+        <>
+          <div className="hidden md:flex">
+            <FilterButtonList conditions={config.conditions}></FilterButtonList>
+          </div>
+          <div className="flex flex-col md:hidden">
+            {chunkArray(config.conditions, config.column).map((conditions, index) => (
+              <FilterButtonList key={index} conditions={conditions}></FilterButtonList>
+            ))}
+          </div>
+        </>
+      ) : (
+        <FilterButtonList conditions={config.conditions}></FilterButtonList>
+      )}
+    </ConfigContext.Provider>
   );
 };
 

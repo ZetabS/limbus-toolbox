@@ -1,115 +1,79 @@
 'use client';
-import React, { createContext, useContext, useReducer } from 'react';
-import { ATTACK_TYPE, KEYWORD, SIN_AFFINITY, SINNER_NAME } from '@/common/constants';
+import React, { createContext, useContext } from 'react';
 
-export const filterConfigs = {
-  'sinner': SINNER_NAME,
-  'rarity': ['1', '2', '3'],
-  'attackType': ATTACK_TYPE,
-  'sinAffinity': SIN_AFFINITY,
-  'keyword': KEYWORD,
-  'skill1.attackType': ATTACK_TYPE,
-  'skill2.attackType': ATTACK_TYPE
-} as const;
+export type Category = string;
+export type Condition = string;
 
-export type FilterState = { [category in Category]: Condition[] };
-export type FilterConfig = typeof filterConfigs;
-export type Category = keyof FilterConfig;
-export type Condition = FilterConfig[Category][number];
+export interface FilterConfig {
+  readonly category: Category;
+  readonly conditions: readonly Condition[];
+  readonly column?: number;
+  readonly imageStyle?: {
+    readonly imagePath: (condition: string) => string;
+    readonly imageWidth: number;
+    readonly imageHeight: number;
+  };
+}
 
-const initialState: FilterState = Object.keys(filterConfigs).reduce(
-  (result: FilterState, category) => {
-    result[category as Category] = [];
-    return result;
-  },
-  {} as FilterState
+export interface FilterContextType {
+  filterState: FilterState;
+  toggleFilter: (category: Category, condition: Condition) => void;
+  resetFilter: () => void;
+  isActive: (category: Category, condition: Condition) => boolean;
+}
+
+export const FilterContext = createContext<FilterContextType>(
+  undefined as unknown as FilterContextType
 );
 
-type Action = {
-  actionType: 'TOGGLE' | 'RESET' | 'TOGGLE_ALL';
-  category?: Category;
-  condition?: Condition;
-};
+export type FilterState = { [category: Category]: Condition[] };
 
-const toggle = (prevState: FilterState, category: Category, condition: Condition) => {
-  const state: FilterState = { ...prevState };
-
-  if (![...filterConfigs[category]].includes(condition)) {
-    throw Error(`Condition not in ${filterConfigs[category]}`);
-  }
-
-  if (state[category].includes(condition)) {
-    state[category] = state[category].filter((c) => c !== condition);
-  } else {
-    state[category] = [...state[category], condition];
-  }
-  return state;
-};
-
-function toggleAll(prevState: FilterState, category: Category) {
-  const state: FilterState = { ...prevState };
-  state[category] =
-    state[category].length === filterConfigs[category].length ? [] : [...filterConfigs[category]];
-  return state;
-}
-
-const reducer = (state: FilterState, action: Action): FilterState => {
-  const { actionType, category, condition } = action;
-  switch (actionType) {
-    case 'TOGGLE':
-      if (!category) {
-        throw Error(`Type of category is ${typeof category}`);
-      }
-
-      if (!condition) {
-        throw Error(`Type of condition is ${typeof condition}`);
-      }
-      return toggle(state, category, condition);
-    case 'TOGGLE_ALL':
-      if (!category) {
-        throw Error(`Type of category is ${typeof category}`);
-      }
-      return toggleAll(state, category);
-    case 'RESET':
-      return initialState;
-    default:
-      throw Error(`Type of actionType is ${typeof actionType}, value is ${actionType}`);
-  }
-};
-
-export const FilterContext = createContext<[FilterState, React.Dispatch<Action>]>([
-  initialState,
-  () => null
-]);
-
-interface Props {
+export const FilterProvider: React.FC<{
+  filterConfigs: readonly FilterConfig[];
   children: React.ReactNode;
-}
-
-export const FilterProvider: React.FC<Props> = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  return <FilterContext.Provider value={[state, dispatch]}>{children}</FilterContext.Provider>;
-};
-
-export const useFilter = () => {
-  const [filterState, dispatch] = useContext(FilterContext);
+}> = ({ filterConfigs, children }) => {
+  const [filterState, setFilterState] = React.useState<FilterState>(
+    filterConfigs.reduce((result: FilterState, { category }) => {
+      result[category] = [];
+      return result;
+    }, {} as FilterState)
+  );
 
   const toggleFilter = (category: Category, condition: Condition) => {
-    dispatch({ actionType: 'TOGGLE', category, condition });
+    const state: FilterState = { ...filterState };
+    const configConditions = filterConfigs.filter((c) => c.category === category)[0].conditions;
+
+    if (!configConditions.includes(condition)) {
+      throw Error(`Condition not in ${configConditions}`);
+    }
+
+    if (state[category].includes(condition)) {
+      state[category] = state[category].filter((c) => c !== condition);
+    } else {
+      state[category] = [...state[category], condition];
+    }
+    setFilterState(state);
   };
 
-  const resetFilters = () => {
-    dispatch({ actionType: 'RESET' });
-  };
-
-  const toggleAllFilters = (category: Category) => {
-    dispatch({ actionType: 'TOGGLE_ALL', category });
+  const resetFilter = () => {
+    setFilterState({});
   };
 
   const isActive = (category: Category, condition: Condition) => {
     return filterState[category].includes(condition);
   };
 
-  return { filterState, isActive, toggleFilter, resetFilters, toggleAllFilters };
+  return (
+    <FilterContext.Provider value={{ filterState, toggleFilter, resetFilter, isActive }}>
+      {children}
+    </FilterContext.Provider>
+  );
+};
+
+export const useFilter = () => {
+  const context = useContext(FilterContext);
+  if (context === undefined) {
+    throw new Error('useFilter must be used within a FilterProvider');
+  }
+  return context;
 };

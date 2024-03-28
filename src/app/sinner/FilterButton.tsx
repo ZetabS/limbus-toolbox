@@ -1,34 +1,41 @@
-import { Category, Condition, FilterContext, useFilter } from '@/app/sinner/hooks/useFilter';
-import React, { JSX, useContext } from 'react';
+import React, { useContext } from 'react';
+import { Condition, FilterConfig, useFilter } from '@/app/sinner/hooks/useFilter';
 import { useTranslation } from 'react-i18next';
-import { CategoryContext } from '@/app/sinner/hooks/CategoryContext';
-import { ConditionContext } from '@/app/sinner/hooks/ConditionContext';
-import AutoSizeImage from '@/components/AutoSizeImage';
+import { ConfigContext } from '@/app/sinner/hooks/ConfigContext';
+import Image from 'next/image';
 
 interface Props {
   readonly condition: Condition;
-  readonly imagePath?: (condition: string) => string;
 }
 
-const FilterButton: React.FC<Props> = ({ condition, imagePath }) => {
+const FilterButton: React.FC<Props> = ({ condition }) => {
   const { t } = useTranslation();
   const { isActive, toggleFilter } = useFilter();
-  const category: Category = useContext(CategoryContext);
+  const config: FilterConfig = useContext(ConfigContext);
 
   return (
-    <button
-      key={condition}
-      className={
-        'btn join-item ' + `${isActive(category, condition) ? 'btn-primary' : 'btn-outline'} `
-      }
-      onClick={() => toggleFilter(category, condition)}
-    >
-      {imagePath ? (
-        <AutoSizeImage alt={condition} src={imagePath(condition)}></AutoSizeImage>
-      ) : (
-        t(condition)
-      )}
-    </button>
+    <div className="flex flex-col items-center text-xs">
+      <button
+        key={condition}
+        className={
+          'btn join-item ' +
+          `${isActive(config.category, condition) ? 'btn-primary' : 'btn-outline'} `
+        }
+        onClick={() => toggleFilter(config.category, condition)}
+      >
+        {config.imageStyle ? (
+          <Image
+            width={config.imageStyle.imageWidth}
+            height={config.imageStyle.imageHeight}
+            src={config.imageStyle.imagePath(condition)}
+            alt={condition}
+          ></Image>
+        ) : (
+          t(condition)
+        )}
+      </button>
+      {t(condition)}
+    </div>
   );
 };
 

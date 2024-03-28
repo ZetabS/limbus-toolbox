@@ -2,6 +2,7 @@ import {
   ATTACK_TYPE,
   KEYWORD,
   KEYWORD_AFFINITY,
+  KEYWORD_OTHER,
   RESISTANCE_LEVEL,
   SIN_AFFINITY,
   SINNER_NAME
@@ -12,7 +13,8 @@ export type ResistanceLevel = (typeof RESISTANCE_LEVEL)[number];
 export type AttackType = (typeof ATTACK_TYPE)[number];
 export type SinAffinity = (typeof SIN_AFFINITY)[number];
 export type KeywordAffinity = (typeof KEYWORD_AFFINITY)[number];
-export type Keyword = KeywordAffinity | (typeof KEYWORD)[number];
+export type KeywordOther = (typeof KEYWORD_OTHER)[number];
+export type Keyword = KeywordAffinity | KeywordOther;
 
 export interface Skill {
   name: string;

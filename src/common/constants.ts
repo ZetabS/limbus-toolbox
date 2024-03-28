@@ -34,8 +34,19 @@ export const KEYWORD_AFFINITY = [
   'rupture',
   'sinking',
   'poise',
-  'charge',
-  'haste'
+  'charge'
 ] as const;
 
-export const KEYWORD = [...KEYWORD_AFFINITY, 'attack_power_up'] as const;
+export const KEYWORD_OTHER = [
+  'ammo',
+  'aggro',
+  'discard',
+  'insight',
+  'bind',
+  'fragile',
+  'paralyze',
+  'haste',
+  'attack_power_up'
+] as const;
+
+export const KEYWORD = [...KEYWORD_AFFINITY, ...KEYWORD_OTHER] as const;

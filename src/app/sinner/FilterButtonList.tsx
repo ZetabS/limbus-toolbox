@@ -1,17 +1,16 @@
-import React, { JSX } from 'react';
+import React from 'react';
 import FilterButton from '@/app/sinner/FilterButton';
-import { Category, Condition } from '@/app/sinner/hooks/useFilter';
+import { Condition } from '@/app/sinner/hooks/useFilter';
 
 interface Props {
-  readonly conditions: Condition[];
-  readonly imagePath?: (condition: string) => string;
+  readonly conditions: readonly Condition[];
 }
 
-export const FilterButtonList: React.FC<Props> = ({ conditions, imagePath }) => {
+export const FilterButtonList: React.FC<Props> = ({ conditions }) => {
   return (
     <div className="join">
       {conditions.map((condition) => (
-        <FilterButton key={condition} condition={condition} imagePath={imagePath}></FilterButton>
+        <FilterButton key={condition} condition={condition}></FilterButton>
       ))}
     </div>
   );
