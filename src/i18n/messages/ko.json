@@ -20,5 +20,19 @@
   },
   "slash": "참격",
   "pierce": "관통",
-  "blunt": "타격"
+  "blunt": "타격",
+  "wrath": "분노",
+  "lust": "색욕",
+  "sloth":  "나태",
+  "gluttony": "탐식",
+  "gloom":  "우울",
+  "pride": "오만",
+  "envy":  "질투",
+  "burn": "화상",
+  "bleed": "출혈",
+  "tremor": "진동",
+  "rupture": "파열",
+  "sinking": "침잠",
+  "poise": "호흡",
+  "charge": "충전"
 }
