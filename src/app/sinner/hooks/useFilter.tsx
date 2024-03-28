@@ -3,13 +3,13 @@ import React, { createContext, useContext, useReducer } from 'react';
 import { ATTACK_TYPE, KEYWORD, SIN_AFFINITY, SINNER_NAME } from '@/common/constants';
 
 export const filterConfigs = {
-  'sinner': Object.values(SINNER_NAME),
+  'sinner': SINNER_NAME,
   'rarity': ['1', '2', '3'],
-  'attackType': Object.values(ATTACK_TYPE),
-  'sinAffinity': Object.values(SIN_AFFINITY),
-  'keyword': Object.values(KEYWORD),
-  'skill1.attackType': Object.values(ATTACK_TYPE),
-  'skill2.attackType': Object.values(ATTACK_TYPE)
+  'attackType': ATTACK_TYPE,
+  'sinAffinity': SIN_AFFINITY,
+  'keyword': KEYWORD,
+  'skill1.attackType': ATTACK_TYPE,
+  'skill2.attackType': ATTACK_TYPE
 } as const;
 
 export type FilterState = { [category in Category]: Condition[] };
