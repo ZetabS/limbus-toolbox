@@ -3,29 +3,31 @@ import React, { JSX, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CategoryContext } from '@/app/sinner/hooks/CategoryContext';
 import { ConditionContext } from '@/app/sinner/hooks/ConditionContext';
+import AutoSizeImage from '@/components/AutoSizeImage';
 
 interface Props {
-  readonly className?: string;
-  readonly render: (category: Category, condition: Condition) => JSX.Element;
+  readonly condition: Condition;
+  readonly imagePath?: (condition: string) => string;
 }
 
-const FilterButton: React.FC<Props> = ({ className, render }) => {
+const FilterButton: React.FC<Props> = ({ condition, imagePath }) => {
   const { t } = useTranslation();
   const { isActive, toggleFilter } = useFilter();
   const category: Category = useContext(CategoryContext);
-  const condition: Condition = useContext(ConditionContext);
 
   return (
     <button
       key={condition}
       className={
-        'flex items-center justify-center text-nowrap ' +
-        `${isActive(category, condition) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'} ` +
-        `${className ? className : ''}`
+        'btn join-item ' + `${isActive(category, condition) ? 'btn-primary' : 'btn-outline'} `
       }
       onClick={() => toggleFilter(category, condition)}
     >
-      {render ? render(category, condition) : t(condition)}
+      {imagePath ? (
+        <AutoSizeImage alt={condition} src={imagePath(condition)}></AutoSizeImage>
+      ) : (
+        t(condition)
+      )}
     </button>
   );
 };
